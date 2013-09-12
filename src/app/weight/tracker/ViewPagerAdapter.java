@@ -6,14 +6,15 @@ import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
-    private static final String[] TITLES = new String[] {"ADD WEIGHT", "LINE CHART"};
+    private static final String[] TITLES = new String[] {"ADD WEIGHT", "LINE CHART", "SETTINGS"};
 
     public ViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
 
-        mFragments = new Fragment[2];
+        mFragments = new Fragment[3];
         mFragments[0] = Fragment.instantiate(context, WeightListFragment.class.getName(), null);
         mFragments[1] = Fragment.instantiate(context, LineChartFragment.class.getName(), null);
+        mFragments[2] = Fragment.instantiate(context, SettingsFragment.class.getName(), null);
     }
 
     @Override
