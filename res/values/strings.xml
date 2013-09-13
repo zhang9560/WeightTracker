@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Weight Tracker</string>
+    <string name="track_your_weight">Track your weight</string>
+    <string name="input_weight">Input weight</string>
+    <string name="add_weight">Add weight</string>
+    <string name="edit_weight">Edit weight</string>
+    <string name="done">Done</string>
 </resources>

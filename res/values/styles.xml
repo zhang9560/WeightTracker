@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RedActionBarTheme"
+           parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/RedActionBar</item>
+        <item name="android:homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_dark</item>
+    </style>
+
+    <style name="RedActionBar"
+           parent="@android:style/Widget.ActionBar">
+        <item name="android:titleTextStyle">@style/TitleTextStyle</item>
+        <item name="android:background">@drawable/indicator_bg</item>
+    </style>
+
+    <style name="TitleTextStyle"
+           parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+</resources>
