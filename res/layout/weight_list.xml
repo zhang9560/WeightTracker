@@ -11,9 +11,9 @@
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dip"
-            android:layout_marginLeft="12dip"
-            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_gravity="right|bottom"
             android:background="@drawable/add_button_selector"
             android:src="@drawable/add_button_icon_selector"/>
 </FrameLayout>
