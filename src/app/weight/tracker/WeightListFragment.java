@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.view.*;
 import android.widget.Toast;
 import com.afollestad.cardsui.Card;
 import com.afollestad.cardsui.CardAdapter;
@@ -17,11 +14,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class WeightListFragment extends Fragment implements View.OnClickListener {
+public class WeightListFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mCardsAdapter = new CardAdapter<Card>(getActivity());
         mDBHelper = new WeightDBHelper(getActivity());
 
@@ -36,21 +34,10 @@ public class WeightListFragment extends Fragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = (View)inflater.inflate(R.layout.weight_list, container, false);
-        CardListView cardList = (CardListView)rootView.findViewById(R.id.card_list);
+        CardListView cardList = (CardListView)inflater.inflate(R.layout.weight_list, container, false);
         cardList.setAdapter(mCardsAdapter);
 
-        ImageButton addButton = (ImageButton)rootView.findViewById(R.id.add_button);
-        addButton.setOnClickListener(this);
-
-        return rootView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), EditWeightActivity.class);
-        intent.putExtra(EditWeightActivity.KEY_WEIGHT_OPERATION, EditWeightActivity.VALUE_ADD_WEIGHT);
-        startActivityForResult(intent, 0);
+        return cardList;
     }
 
     @Override
@@ -65,6 +52,24 @@ public class WeightListFragment extends Fragment implements View.OnClickListener
         } else if (resultCode == EditWeightActivity.RESULT_DATE_EXIST) {
             Toast.makeText(getActivity(), "Do not add", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.add_weight_actions, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Intent intent = new Intent(getActivity(), EditWeightActivity.class);
+                intent.putExtra(EditWeightActivity.KEY_WEIGHT_OPERATION, EditWeightActivity.VALUE_ADD_WEIGHT);
+                startActivityForResult(intent, 0);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private CardAdapter mCardsAdapter;
