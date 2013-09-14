@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 import com.afollestad.cardsui.Card;
 import com.afollestad.cardsui.CardAdapter;
 import com.afollestad.cardsui.CardListView;
@@ -22,9 +23,10 @@ public class WeightListFragment extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCardsAdapter = new CardAdapter<Card>(getActivity());
+        mDBHelper = new WeightDBHelper(getActivity());
 
         GregorianCalendar calendar = new GregorianCalendar();
-        ArrayList<Weight> weights = new WeightDBHelper(getActivity()).getAllWeights();
+        ArrayList<Weight> weights = mDBHelper.getAllWeights();
         for (Weight weight : weights) {
             calendar.setTimeInMillis(weight.dateInMilliseconds);
             String date = String.format("%d-%d-%d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -56,13 +58,15 @@ public class WeightListFragment extends Fragment implements View.OnClickListener
         if (resultCode == Activity.RESULT_OK) {
             long dateInMilliseconds = data.getLongExtra(WeightDBHelper.KEY_DATE, 0);
             int weight = data.getIntExtra(WeightDBHelper.KEY_WEIGHT, 0);
-
             GregorianCalendar calendar = new GregorianCalendar();
             calendar.setTimeInMillis(dateInMilliseconds);
             String date = String.format("%d-%d-%d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             mCardsAdapter.add(0, new Card(date, String.format("Weight : %dkg", weight)));
+        } else if (resultCode == EditWeightActivity.RESULT_DATE_EXIST) {
+            Toast.makeText(getActivity(), "Do not add", Toast.LENGTH_SHORT).show();
         }
     }
 
     private CardAdapter mCardsAdapter;
+    private WeightDBHelper mDBHelper;
 }

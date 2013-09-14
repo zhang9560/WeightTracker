@@ -17,6 +17,8 @@ public class EditWeightActivity extends Activity {
     public static final int VALUE_ADD_WEIGHT = 0;
     public static final int VALUE_EDIT_WEIGHT = 1;
 
+    public static final int RESULT_DATE_EXIST = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +61,18 @@ public class EditWeightActivity extends Activity {
             case R.id.action_done:
                 long date = getMilliseconds(mDatePicker.getYear(), mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
                 int weight = Integer.valueOf(mEditText.getText().toString());
+                WeightDBHelper dbHelper = new WeightDBHelper(this);
 
-                new WeightDBHelper(this).insert(date, weight);
+                if (!dbHelper.exist(date)) {
+                    dbHelper.insert(date, weight);
+                    Intent intent = new Intent();
+                    intent.putExtra(WeightDBHelper.KEY_DATE, date);
+                    intent.putExtra(WeightDBHelper.KEY_WEIGHT, weight);
+                    setResult(RESULT_OK, intent);
+                } else {
+                    setResult(RESULT_DATE_EXIST);
+                }
 
-                Intent intent = new Intent();
-                intent.putExtra(WeightDBHelper.KEY_DATE, date);
-                intent.putExtra(WeightDBHelper.KEY_WEIGHT, weight);
-                setResult(RESULT_OK, intent);
                 finish();
                 break;
         }

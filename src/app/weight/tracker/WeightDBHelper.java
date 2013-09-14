@@ -17,7 +17,7 @@ public class WeightDBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String WEIGHT_TABLE_NAME = "weight";
     private static final String WEIGHT_TABLE_CREATE =
-            "CREATE TABLE " + WEIGHT_TABLE_NAME + " (" +
+            "create table " + WEIGHT_TABLE_NAME + " (" +
             KEY_DATE + " integer, " +
             KEY_WEIGHT + " integer);";
 
@@ -45,6 +45,15 @@ public class WeightDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void update(long dateInMilliseconds, int weight) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_WEIGHT, weight);
+
+        db.update(WEIGHT_TABLE_NAME, values, KEY_DATE + " = " + dateInMilliseconds, null);
+        db.close();
+    }
+
     public ArrayList<Weight> getAllWeights() {
         ArrayList<Weight> weights = new ArrayList<Weight>();
         SQLiteDatabase db = getReadableDatabase();
@@ -62,5 +71,18 @@ public class WeightDBHelper extends SQLiteOpenHelper {
 
         db.close();
         return weights;
+    }
+
+    public boolean exist(long dateInMilliseconds) {
+        boolean result = false;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(WEIGHT_TABLE_NAME, null, KEY_DATE + " = " + dateInMilliseconds, null, null, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            result = true;
+        }
+
+        db.close();
+        return result;
     }
 }
