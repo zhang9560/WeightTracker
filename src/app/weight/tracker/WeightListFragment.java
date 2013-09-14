@@ -1,5 +1,6 @@
 package app.weight.tracker;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import com.afollestad.cardsui.Card;
 import com.afollestad.cardsui.CardAdapter;
-import com.afollestad.cardsui.CardHeader;
 import com.afollestad.cardsui.CardListView;
 
 public class WeightListFragment extends Fragment implements View.OnClickListener {
@@ -41,7 +41,10 @@ public class WeightListFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        if (resultCode == Activity.RESULT_OK) {
+            long date = data.getLongExtra(WeightDBHelper.KEY_DATE, 0);
+            int weight = data.getIntExtra(WeightDBHelper.KEY_WEIGHT, 0);
+        }
     }
 
     private CardAdapter mCardsAdapter;
