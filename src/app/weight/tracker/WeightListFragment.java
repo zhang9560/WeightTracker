@@ -18,7 +18,6 @@ public class WeightListFragment extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCardsAdapter = new CardAdapter<Card>(getActivity());
-        mCardsAdapter.add(new CardHeader(getActivity(), R.string.track_your_weight));
     }
 
     @Override

@@ -9,7 +9,7 @@
     <style name="RedActionBar"
            parent="@android:style/Widget.ActionBar">
         <item name="android:titleTextStyle">@style/TitleTextStyle</item>
-        <item name="android:background">@drawable/indicator_bg</item>
+        <item name="android:background">@drawable/actionbar_bg</item>
     </style>
 
     <style name="TitleTextStyle"

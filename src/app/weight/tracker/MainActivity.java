@@ -11,6 +11,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        getActionBar().setDisplayShowHomeEnabled(false);
+
         mViewPager = (ViewPager)findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), this);
         mViewPager.setAdapter(viewPagerAdapter);
