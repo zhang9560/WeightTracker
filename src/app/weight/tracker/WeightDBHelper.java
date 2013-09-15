@@ -19,7 +19,7 @@ public class WeightDBHelper extends SQLiteOpenHelper {
     private static final String WEIGHT_TABLE_CREATE =
             "create table " + WEIGHT_TABLE_NAME + " (" +
             KEY_DATE + " integer, " +
-            KEY_WEIGHT + " integer);";
+            KEY_WEIGHT + " float);";
 
     public WeightDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
