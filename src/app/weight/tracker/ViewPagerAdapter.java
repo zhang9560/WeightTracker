@@ -6,7 +6,7 @@ import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
-    private static final String[] TITLES = new String[] {"ADD WEIGHT", "LINE CHART", "SETTINGS"};
+    private static final String[] TITLES = new String[] {"WEIGHT LIST", "LINE CHART", "SETTINGS"};
 
     public ViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="pref_gender"
+        android:title="@string/gender"
+        android:summary="@string/choose_gender"
+        android:dialogTitle="@string/choose_gender"
+        android:entries="@array/gender_array"
+        android:entryValues="@array/gender_array"/>
+    <EditTextPreference
+        android:key="pref_height"
+        android:title="@string/pref_title_height"
+        android:summary="@string/input_height"
+        android:dialogTitle="@string/input_height"
+        android:numeric="decimal"
+        android:inputType="numberDecimal" />
+</PreferenceScreen>

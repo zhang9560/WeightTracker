@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Weight Tracker</string>
-    <string name="track_your_weight">Track your weight</string>
-    <string name="input_weight">Input weight</string>
+    <string name="input_weight">Input weight (kilogram)</string>
     <string name="add_weight">Add weight</string>
     <string name="edit_weight">Edit weight</string>
     <string name="done">Done</string>
     <string name="add">Add</string>
+    <string name="gender">Gender</string>
+    <string name="choose_gender">Choose your gender</string>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item >Female</item>
+    </string-array>
+    <string name="pref_title_height">Height (centimeter)</string>
+    <string name="input_height">Input your height</string>
 </resources>
