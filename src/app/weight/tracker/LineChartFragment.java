@@ -10,9 +10,6 @@ import cn.limc.androidcharts.entity.LineEntity;
 import cn.limc.androidcharts.view.LineChart;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
 
 public class LineChartFragment extends Fragment {
 
@@ -47,7 +44,7 @@ public class LineChartFragment extends Fragment {
         lineData.add(80f);
         LineEntity line1 = new LineEntity();
         line1.setTitle("test");
-        line1.setLineColor(Color.WHITE);
+        line1.setLineColor(Color.BLACK);
         line1.setLineData(lineData);
 
         ArrayList<LineEntity> lines = new ArrayList<LineEntity>();
@@ -58,6 +55,7 @@ public class LineChartFragment extends Fragment {
         lineChart.setMaxPointNum(5);
         lineChart.setDisplayLatitude(false);
         lineChart.setDisplayLongitude(false);
+        lineChart.setBackgroundColor(Color.TRANSPARENT);
         lineChart.setLineData(lines);
 
         return lineChart;

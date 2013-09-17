@@ -2,6 +2,7 @@ package app.weight.tracker;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,6 +27,10 @@ public class EditWeightActivity extends Activity {
 
         mDatePicker = (DatePicker)findViewById(R.id.date_picker);
         mEditText = (EditText)findViewById(R.id.edit_text);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        mAlertDialog = builder.setTitle(R.string.error).setMessage(R.string.must_input_weight)
+                .setCancelable(true).setNegativeButton(R.string.done, null).create();
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -59,21 +64,29 @@ public class EditWeightActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_done:
-                long date = getMilliseconds(mDatePicker.getYear(), mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
-                int weight = Integer.valueOf(mEditText.getText().toString());
-                WeightDBHelper dbHelper = new WeightDBHelper(this);
+                String strWeight = mEditText.getText().toString();
 
-                if (!dbHelper.exist(date)) {
-                    dbHelper.insert(date, weight);
-                    Intent intent = new Intent();
-                    intent.putExtra(WeightDBHelper.KEY_DATE, date);
-                    intent.putExtra(WeightDBHelper.KEY_WEIGHT, weight);
-                    setResult(RESULT_OK, intent);
+                if (!strWeight.isEmpty()) {
+                    float weight = Float.valueOf(strWeight);
+                    long date = getMilliseconds(mDatePicker.getYear(), mDatePicker.getMonth(),
+                            mDatePicker.getDayOfMonth());
+                    WeightDBHelper dbHelper = new WeightDBHelper(this);
+
+                    if (!dbHelper.exist(date)) {
+                        dbHelper.insert(date, weight);
+                        Intent intent = new Intent();
+                        intent.putExtra(WeightDBHelper.KEY_DATE, date);
+                        intent.putExtra(WeightDBHelper.KEY_WEIGHT, weight);
+                        setResult(RESULT_OK, intent);
+                    } else {
+                        setResult(RESULT_DATE_EXIST);
+                    }
+
+                    finish();
                 } else {
-                    setResult(RESULT_DATE_EXIST);
+                    mAlertDialog.show();
                 }
 
-                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -86,4 +99,5 @@ public class EditWeightActivity extends Activity {
 
     private DatePicker mDatePicker;
     private EditText mEditText;
+    private AlertDialog mAlertDialog;
 }

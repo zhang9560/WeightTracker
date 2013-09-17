@@ -35,7 +35,7 @@ public class WeightDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insert(long dateInMilliseconds, int weight) {
+    public void insert(long dateInMilliseconds, float weight) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_DATE, dateInMilliseconds);
@@ -45,7 +45,7 @@ public class WeightDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void update(long dateInMilliseconds, int weight) {
+    public void update(long dateInMilliseconds, float weight) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_WEIGHT, weight);
