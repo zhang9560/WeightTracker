@@ -35,7 +35,7 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
             String date = String.format("%d-%d-%d", calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             mCardsAdapter.add(new Card(date, String.format("Weight : %.1fkg  BMI : %.1f",
-                    weight.weight, weight.weight / height / height)));
+                    weight.weight, weight.weight / height / height)).setTag(weight.dateInMilliseconds));
         }
     }
 
@@ -59,7 +59,7 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
             String date = String.format("%d-%d-%d", calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             mCardsAdapter.add(new Card(date, String.format("Weight : %.1fkg  BMI : %.1f",
-                    weight, weight / height / height)));
+                    weight, weight / height / height)).setTag(dateInMilliseconds));
         } else if (resultCode == EditWeightActivity.RESULT_DATE_EXIST) {
             Toast.makeText(getActivity(), R.string.can_not_add_same_date, Toast.LENGTH_LONG).show();
         }
@@ -85,7 +85,14 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
 
     @Override
     public void onMenuItemClick(Card card, MenuItem item) {
-
+        switch (item.getItemId()) {
+            case R.id.card_popup_edit:
+                break;
+            case R.id.card_popup_delete:
+                mDBHelper.delete((Long)card.getTag());
+                mCardsAdapter.remove(card);
+                break;
+        }
     }
 
     private CardAdapter mCardsAdapter;

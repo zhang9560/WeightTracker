@@ -54,6 +54,12 @@ public class WeightDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void delete(long dateInMilliseconds) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(WEIGHT_TABLE_NAME, KEY_DATE + " = " + dateInMilliseconds, null);
+        db.close();
+    }
+
     public ArrayList<Weight> getAllWeights() {
         ArrayList<Weight> weights = new ArrayList<Weight>();
         SQLiteDatabase db = getReadableDatabase();
