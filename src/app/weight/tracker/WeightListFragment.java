@@ -10,7 +10,6 @@ import com.afollestad.cardsui.Card;
 import com.afollestad.cardsui.CardAdapter;
 import com.afollestad.cardsui.CardListView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -29,8 +28,8 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
                 .getString(SettingsFragment.KEY_PREF_HEIGHT, "0")) / 100f;
 
         GregorianCalendar calendar = new GregorianCalendar();
-        ArrayList<Weight> weights = mDBHelper.getAllWeights();
-        for (Weight weight : weights) {
+        sWeights = mDBHelper.getAllWeights();
+        for (Weight weight : sWeights) {
             calendar.setTimeInMillis(weight.dateInMilliseconds);
             String date = String.format("%d-%d-%d", calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -55,21 +54,30 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
             float height = Float.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity())
                     .getString(SettingsFragment.KEY_PREF_HEIGHT, "0")) / 100f;
 
+            int indexInserted;
+            for (indexInserted = 0; indexInserted < sWeights.size(); indexInserted++) {
+                if (sWeights.get(indexInserted).dateInMilliseconds <= dateInMilliseconds) {
+                    break;
+                }
+            }
+
             if (resultCode == Activity.RESULT_OK) {
                 GregorianCalendar calendar = new GregorianCalendar();
                 calendar.setTimeInMillis(dateInMilliseconds);
                 String date = String.format("%d-%d-%d", calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                mCardsAdapter.add(new Card(date, String.format("Weight : %.1fkg  BMI : %.1f",
+                mCardsAdapter.add(indexInserted, new Card(date, String.format("Weight : %.1fkg  BMI : %.1f",
                         weight, weight / height / height)).setTag(dateInMilliseconds));
+                sWeights.add(indexInserted, new Weight(dateInMilliseconds, weight));
             } else if (resultCode == EditWeightActivity.RESULT_DATE_EXIST) {
                 List<Card> cardsList = mCardsAdapter.getItems();
                 for (Card card : cardsList) {
                     if (dateInMilliseconds == (Long)card.getTag()) {
                         Card updatedCard = new Card(card.getTitle(), String.format("Weight : %.1fkg  BMI : %.1f",
                                 weight, weight / height / height)).setTag(dateInMilliseconds);
-                        mCardsAdapter.remove(card);
-                        mCardsAdapter.add(updatedCard);
+                        mCardsAdapter.remove(indexInserted);
+                        mCardsAdapter.add(indexInserted, updatedCard);
+                        sWeights.set(indexInserted, new Weight(dateInMilliseconds, weight));
                         break;
                     }
                 }
@@ -103,16 +111,26 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
                 intent.putExtra(EditWeightActivity.KEY_WEIGHT_OPERATION, EditWeightActivity.VALUE_EDIT_WEIGHT);
                 intent.putExtra(WeightDBHelper.KEY_DATE, (Long)card.getTag());
                 String content = card.getContent();
-                String weight = content.substring(content.indexOf(':') + 2, content.indexOf('k'));
-                intent.putExtra(WeightDBHelper.KEY_WEIGHT, weight);
+                String strWeight = content.substring(content.indexOf(':') + 2, content.indexOf('k'));
+                intent.putExtra(WeightDBHelper.KEY_WEIGHT, strWeight);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.card_popup_delete:
-                mDBHelper.delete((Long)card.getTag());
+                long dateInMilliseconds = (Long)card.getTag();
+                mDBHelper.delete(dateInMilliseconds);
                 mCardsAdapter.remove(card);
+
+                for (Weight weight : sWeights) {
+                    if (weight.dateInMilliseconds == dateInMilliseconds) {
+                        sWeights.remove(weight);
+                        break;
+                    }
+                }
                 break;
         }
     }
+
+    private static List<Weight> sWeights;
 
     private CardAdapter mCardsAdapter;
     private WeightDBHelper mDBHelper;
