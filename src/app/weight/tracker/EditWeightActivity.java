@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class EditWeightActivity extends Activity {
@@ -43,6 +44,12 @@ public class EditWeightActivity extends Activity {
                 break;
             case VALUE_EDIT_WEIGHT:
                 actionBar.setTitle(R.string.edit_weight);
+                long dateInMilliseconds = intent.getLongExtra(WeightDBHelper.KEY_DATE, 0);
+                Calendar calendar = toCalendar(dateInMilliseconds);
+                mDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+                mDatePicker.setEnabled(false);
+                mEditText.setText(intent.getStringExtra(WeightDBHelper.KEY_WEIGHT));
                 break;
         }
     }
@@ -72,14 +79,16 @@ public class EditWeightActivity extends Activity {
                             mDatePicker.getDayOfMonth());
                     WeightDBHelper dbHelper = new WeightDBHelper(this);
 
+                    Intent intent = new Intent();
+                    intent.putExtra(WeightDBHelper.KEY_DATE, date);
+                    intent.putExtra(WeightDBHelper.KEY_WEIGHT, weight);
+
                     if (!dbHelper.exist(date)) {
                         dbHelper.insert(date, weight);
-                        Intent intent = new Intent();
-                        intent.putExtra(WeightDBHelper.KEY_DATE, date);
-                        intent.putExtra(WeightDBHelper.KEY_WEIGHT, weight);
                         setResult(RESULT_OK, intent);
                     } else {
-                        setResult(RESULT_DATE_EXIST);
+                        dbHelper.update(date, weight);
+                        setResult(RESULT_DATE_EXIST, intent);
                     }
 
                     finish();
@@ -95,6 +104,12 @@ public class EditWeightActivity extends Activity {
     private long getMilliseconds(int year, int month, int day) {
         GregorianCalendar calendar = new GregorianCalendar(year, month, day);
         return calendar.getTimeInMillis();
+    }
+
+    private Calendar toCalendar(long dateInMilliseconds) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(dateInMilliseconds);
+        return calendar;
     }
 
     private DatePicker mDatePicker;

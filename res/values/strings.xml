@@ -16,7 +16,6 @@
     </string-array>
     <string name="pref_title_height">Height (centimeter)</string>
     <string name="input_height">Input your height</string>
-    <string name="can_not_add_same_date">Can\'t add the date has been added.</string>
     <string name="must_input_weight">Must input your weight before saving!</string>
     <string name="error">Error</string>
 </resources>
