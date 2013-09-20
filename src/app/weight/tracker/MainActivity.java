@@ -27,8 +27,10 @@ public class MainActivity extends Activity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 1) { // LineChartFragment
-                    ((LineChartFragment)viewPagerAdapter.getItem(position)).updateChart();
+                switch (position) {
+                    case 1: // LineChartFragment
+                        ((ChartUpdater)viewPagerAdapter.getItem(position)).updateChart();
+                        break;
                 }
             }
 
