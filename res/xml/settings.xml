@@ -15,4 +15,11 @@
         android:dialogTitle="@string/input_height"
         android:numeric="decimal"
         android:inputType="numberDecimal" />
+    <EditTextPreference
+            android:key="pref_target_weight"
+            android:title="@string/pref_title_target_weight"
+            android:summary="@string/input_target_weight"
+            android:dialogTitle="@string/input_target_weight"
+            android:numeric="decimal"
+            android:inputType="numberDecimal" />
 </PreferenceScreen>

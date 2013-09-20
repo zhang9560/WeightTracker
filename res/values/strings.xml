@@ -21,4 +21,6 @@
     <string name="weight_list">WEIGHT LIST</string>
     <string name="line_chart">LINE CHART</string>
     <string name="settings">SETTINGS</string>
+    <string name="pref_title_target_weight">Target Weight (kilogram)</string>
+    <string name="input_target_weight">Input target weight</string>
 </resources>

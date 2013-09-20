@@ -21,4 +21,6 @@
     <string name="weight_list">体重列表</string>
     <string name="line_chart">趋势图</string>
     <string name="settings">设置</string>
+    <string name="pref_title_target_weight">目标体重 (公斤)</string>
+    <string name="input_target_weight">输入目标体重</string>
 </resources>

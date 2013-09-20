@@ -11,6 +11,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
     public static final String KEY_PREF_GENDER = "pref_gender";
     public static final String KEY_PREF_HEIGHT = "pref_height";
+    public static final String KEY_PREF_TARGET_WEIGHT = "pref_target_weight";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,11 @@ public class SettingsFragment extends PreferenceFragment implements
         String height = sharedPrefs.getString(KEY_PREF_HEIGHT, null);
         if (height != null && !height.isEmpty()) {
             prefManager.findPreference(KEY_PREF_HEIGHT).setSummary(height);
+        }
+
+        String targetWeight = sharedPrefs.getString(KEY_PREF_TARGET_WEIGHT, null);
+        if (targetWeight != null && !targetWeight.isEmpty()) {
+            prefManager.findPreference(KEY_PREF_TARGET_WEIGHT).setSummary(targetWeight);
         }
     }
 
@@ -57,6 +63,8 @@ public class SettingsFragment extends PreferenceFragment implements
             preference.setSummary(R.string.choose_gender);
         } else if (key.equals(KEY_PREF_HEIGHT)) {
             preference.setSummary(R.string.input_height);
+        } else if (key.equals(KEY_PREF_TARGET_WEIGHT)) {
+            preference.setSummary(R.string.input_target_weight);
         }
     }
 }
