@@ -130,7 +130,7 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
         }
     }
 
-    private static List<Weight> sWeights;
+    public static List<Weight> sWeights;
 
     private CardAdapter mCardsAdapter;
     private WeightDBHelper mDBHelper;

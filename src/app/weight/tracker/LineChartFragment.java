@@ -14,52 +14,56 @@ import java.util.ArrayList;
 public class LineChartFragment extends Fragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mDBHelper = new WeightDBHelper(getActivity());
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        LineChart lineChart = (LineChart)inflater.inflate(R.layout.line_chart, container, false);
+        mLineChart = (LineChart)inflater.inflate(R.layout.line_chart, container, false);
+        mLineChart.setBackgroundColor(Color.TRANSPARENT);
 
-        ArrayList<String> axisXTitles = new ArrayList<String>();
-        ArrayList<String> axisYTitles = new ArrayList<String>();
-        for (int i = 0; i <= 100; i += 10) {
-            axisYTitles.add(String.valueOf(i));
-        }
-        axisXTitles.add("9/1");
-        axisXTitles.add("9/2");
-        axisXTitles.add("9/3");
-        axisXTitles.add("9/4");
-        axisXTitles.add("9/5");
-        lineChart.setAxisXTitles(axisXTitles);
-        lineChart.setAxisYTitles(axisYTitles);
-
-        ArrayList<Float> lineData = new ArrayList<Float>();
-        lineData.add(10f);
-        lineData.add(20f);
-        lineData.add(50f);
-        lineData.add(40f);
-        lineData.add(80f);
-        LineEntity line1 = new LineEntity();
-        line1.setTitle("test");
-        line1.setLineColor(Color.BLACK);
-        line1.setLineData(lineData);
-
-        ArrayList<LineEntity> lines = new ArrayList<LineEntity>();
-        lines.add(line1);
-
-        lineChart.setMaxValue(100);
-        lineChart.setMinValue(0);
-        lineChart.setMaxPointNum(5);
-        lineChart.setDisplayLatitude(false);
-        lineChart.setDisplayLongitude(false);
-        lineChart.setBackgroundColor(Color.TRANSPARENT);
-        lineChart.setLineData(lines);
-
-        return lineChart;
+        return mLineChart;
     }
 
-    private WeightDBHelper mDBHelper;
+    public void updateChart() {
+        // Display line chart if number of points more than 1.
+        if (WeightListFragment.sWeights.size() > 1) {
+            int maxWeight = (int)WeightListFragment.sWeights.get(0).weight + 1;
+            int minWeight = (int)WeightListFragment.sWeights.get(0).weight;
+            ArrayList<Float> lineData = new ArrayList<Float>();
+
+            for (int i = WeightListFragment.sWeights.size() - 1; i >= 0; i--) {
+                Weight aWeight = WeightListFragment.sWeights.get(i);
+
+                if (maxWeight < aWeight.weight) {
+                    maxWeight = (int)aWeight.weight + 1;
+                }
+
+                if (minWeight > aWeight.weight) {
+                    minWeight = (int)aWeight.weight;
+                }
+
+                lineData.add(aWeight.weight);
+            }
+
+            ArrayList<String> axisYTitles = new ArrayList<String>();
+            for (int i = minWeight; i <= maxWeight; i++) {
+                axisYTitles.add(String.valueOf(i));
+            }
+            mLineChart.setAxisYTitles(axisYTitles);
+
+            LineEntity weightLineEntity = new LineEntity();
+            weightLineEntity.setLineColor(Color.BLACK);
+            weightLineEntity.setLineData(lineData);
+
+            ArrayList<LineEntity> lines = new ArrayList<LineEntity>();
+            lines.add(weightLineEntity);
+
+            mLineChart.setMaxValue(maxWeight);
+            mLineChart.setMinValue(minWeight);
+            mLineChart.setMaxPointNum(WeightListFragment.sWeights.size());
+            mLineChart.setDisplayLatitude(true);
+            mLineChart.setDisplayLongitude(false);
+            mLineChart.setLineData(lines);
+            mLineChart.invalidate();
+        }
+    }
+
+    private LineChart mLineChart;
 }

@@ -13,13 +13,31 @@ public class MainActivity extends Activity {
 
         getActionBar().setDisplayShowHomeEnabled(false);
 
-        mViewPager = (ViewPager)findViewById(R.id.view_pager);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), this);
-        mViewPager.setAdapter(viewPagerAdapter);
+        ViewPager viewPager = (ViewPager)findViewById(R.id.view_pager);
+        final ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), this);
+        viewPager.setAdapter(viewPagerAdapter);
 
         TitlePageIndicator pageIndicator = (TitlePageIndicator)findViewById(R.id.page_indicator);
-        pageIndicator.setViewPager(mViewPager);
+        pageIndicator.setViewPager(viewPager);
+        pageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) { // LineChartFragment
+                    ((LineChartFragment)viewPagerAdapter.getItem(position)).updateChart();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
-    private ViewPager mViewPager;
+
 }
