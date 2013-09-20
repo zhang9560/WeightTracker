@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">体重追踪</string>
+    <string name="input_weight">输入体重 (公斤)</string>
+    <string name="add_weight">新增体重</string>
+    <string name="edit_weight">修改体重</string>
+    <string name="done">完成</string>
+    <string name="add">新增</string>
+    <string name="edit">修改</string>
+    <string name="delete">删除</string>
+    <string name="gender">性别</string>
+    <string name="choose_gender">选择性别</string>
+    <string-array name="gender_array">
+        <item>男性</item>
+        <item >女性</item>
+    </string-array>
+    <string name="pref_title_height">身高 (厘米)</string>
+    <string name="input_height">输入身高</string>
+    <string name="must_input_weight">身高不能为空!</string>
+    <string name="error">错误</string>
+    <string name="weight_list">体重列表</string>
+    <string name="line_chart">趋势图</string>
+    <string name="settings">设置</string>
+</resources>
