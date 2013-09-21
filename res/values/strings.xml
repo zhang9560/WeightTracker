@@ -30,4 +30,6 @@
     <string name="max_weight">Max Weight</string>
     <string name="current_weight">Current Weight</string>
     <string name="target_weight">Target Weight</string>
+    <string name="kg">kg</string>
+    <string name="bmi">BMI</string>
 </resources>

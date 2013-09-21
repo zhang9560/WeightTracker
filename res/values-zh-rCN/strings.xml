@@ -30,4 +30,6 @@
     <string name="max_weight">最大体重</string>
     <string name="current_weight">当前体重</string>
     <string name="target_weight">目标体重</string>
+    <string name="kg">公斤</string>
+    <string name="bmi">体重指数</string>
 </resources>

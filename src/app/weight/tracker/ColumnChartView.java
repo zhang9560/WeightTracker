@@ -48,25 +48,33 @@ public class ColumnChartView extends BaseChartView {
         // create the dataset...
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        float minWeight = WeightListFragment.sWeights.get(0).weight;
-        float maxWeight = WeightListFragment.sWeights.get(0).weight;
-        float currentWeight = WeightListFragment.sWeights.get(0).weight;
-        float targetWeight = Float.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(SettingsFragment.KEY_PREF_TARGET_WEIGHT, "0"));
-        for (Weight weight : WeightListFragment.sWeights) {
-            if (minWeight > weight.weight) {
-                minWeight = weight.weight;
+        if (WeightListFragment.sWeights.size() > 0) {
+            float minWeight = WeightListFragment.sWeights.get(0).weight;
+            float maxWeight = WeightListFragment.sWeights.get(0).weight;
+            float currentWeight = WeightListFragment.sWeights.get(0).weight;
+            float targetWeight = 0f;
+            try {
+                targetWeight = Float.valueOf(PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString(SettingsFragment.KEY_PREF_TARGET_WEIGHT, "0"));
+            } catch (NumberFormatException e) {
+
             }
 
-            if (maxWeight < weight.weight) {
-                maxWeight = weight.weight;
+            for (Weight weight : WeightListFragment.sWeights) {
+                if (minWeight > weight.weight) {
+                    minWeight = weight.weight;
+                }
+
+                if (maxWeight < weight.weight) {
+                    maxWeight = weight.weight;
+                }
             }
+
+            dataset.addValue(minWeight, series1, category1);
+            dataset.addValue(maxWeight, series2, category1);
+            dataset.addValue(currentWeight, series3, category1);
+            dataset.addValue(targetWeight, series4, category1);
         }
-
-        dataset.addValue(minWeight, series1, category1);
-        dataset.addValue(maxWeight, series2, category1);
-        dataset.addValue(currentWeight, series3, category1);
-        dataset.addValue(targetWeight, series4, category1);
 
         return dataset;
 

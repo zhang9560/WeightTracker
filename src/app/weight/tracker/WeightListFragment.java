@@ -26,17 +26,32 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
         mCardsAdapter.setPopupMenu(R.menu.card_popup, this);
         mDBHelper = new WeightDBHelper(getActivity());
 
-        float height = Float.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity())
+        float height = 0f;
+        try {
+        height = Float.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .getString(SettingsFragment.KEY_PREF_HEIGHT, "0")) / 100f;
+        } catch (NumberFormatException e) {
+
+        }
 
         GregorianCalendar calendar = new GregorianCalendar();
         sWeights = mDBHelper.getAllWeights();
         for (Weight weight : sWeights) {
             calendar.setTimeInMillis(weight.dateInMilliseconds);
-            String date = String.format("%d-%d-%d", calendar.get(Calendar.YEAR),
+            String date = String.format("%d-%02d-%02d", calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-            mCardsAdapter.add(new Card(date, String.format("Weight : %.1fkg  BMI : %.1f",
-                    weight.weight, weight.weight / height / height)).setTag(weight.dateInMilliseconds));
+
+            Card card = null;
+            if (height != 0) {
+                card = new Card(date, String.format("%s : %.1f%s  %s : %.1f",
+                        getString(R.string.weight), weight.weight, getString(R.string.kg), getString(R.string.bmi),
+                        weight.weight / height / height)).setTag(weight.dateInMilliseconds);
+            } else {
+                card = new Card(date, String.format("%s : %.1f%s", getString(R.string.weight),
+                        weight.weight, getString(R.string.kg))).setTag(weight.dateInMilliseconds);
+            }
+
+            mCardsAdapter.add(card);
         }
     }
 
@@ -53,8 +68,13 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
         if (resultCode != Activity.RESULT_CANCELED) {
             long dateInMilliseconds = data.getLongExtra(WeightDBHelper.KEY_DATE, 0);
             float weight = data.getFloatExtra(WeightDBHelper.KEY_WEIGHT, 0.0f);
-            float height = Float.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity())
-                    .getString(SettingsFragment.KEY_PREF_HEIGHT, "0")) / 100f;
+            float height = 0f;
+            try {
+                height = Float.valueOf(PreferenceManager.getDefaultSharedPreferences(getActivity())
+                        .getString(SettingsFragment.KEY_PREF_HEIGHT, "0")) / 100f;
+            } catch (NumberFormatException e) {
+
+            }
 
             int indexInserted;
             for (indexInserted = 0; indexInserted < sWeights.size(); indexInserted++) {
@@ -66,17 +86,35 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
             if (resultCode == Activity.RESULT_OK) {
                 GregorianCalendar calendar = new GregorianCalendar();
                 calendar.setTimeInMillis(dateInMilliseconds);
-                String date = String.format("%d-%d-%d", calendar.get(Calendar.YEAR),
+                String date = String.format("%d-%02d-%02d", calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                mCardsAdapter.add(indexInserted, new Card(date, String.format("Weight : %.1fkg  BMI : %.1f",
-                        weight, weight / height / height)).setTag(dateInMilliseconds));
+
+                Card card = null;
+                if (height != 0) {
+                    card = new Card(date, String.format("%s : %.1f%s  %s : %.1f",
+                            getString(R.string.weight), weight, getString(R.string.kg), getString(R.string.bmi),
+                            weight / height / height)).setTag(dateInMilliseconds);
+                } else {
+                    card = new Card(date, String.format("%s : %.1f%s", getString(R.string.weight),
+                            weight, getString(R.string.kg))).setTag(dateInMilliseconds);
+                }
+
+                mCardsAdapter.add(indexInserted, card);
                 sWeights.add(indexInserted, new Weight(dateInMilliseconds, weight));
             } else if (resultCode == EditWeightActivity.RESULT_DATE_EXIST) {
                 List<Card> cardsList = mCardsAdapter.getItems();
                 for (Card card : cardsList) {
                     if (dateInMilliseconds == (Long)card.getTag()) {
-                        Card updatedCard = new Card(card.getTitle(), String.format("Weight : %.1fkg  BMI : %.1f",
-                                weight, weight / height / height)).setTag(dateInMilliseconds);
+                        Card updatedCard = null;
+                        if (height != 0) {
+                            updatedCard = new Card(card.getTitle(), String.format("%s : %.1f%s  %s : %.1f",
+                                    getString(R.string.weight), weight, getString(R.string.kg), getString(R.string.bmi),
+                                    weight / height / height)).setTag(dateInMilliseconds);
+                        } else {
+                            updatedCard = new Card(card.getTitle(), String.format("%s : %.1f%s", getString(R.string.weight),
+                                    weight, getString(R.string.kg))).setTag(dateInMilliseconds);
+                        }
+
                         mCardsAdapter.remove(indexInserted);
                         mCardsAdapter.add(indexInserted, updatedCard);
                         sWeights.set(indexInserted, new Weight(dateInMilliseconds, weight));
@@ -113,7 +151,7 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
                 intent.putExtra(EditWeightActivity.KEY_WEIGHT_OPERATION, EditWeightActivity.VALUE_EDIT_WEIGHT);
                 intent.putExtra(WeightDBHelper.KEY_DATE, (Long)card.getTag());
                 String content = card.getContent();
-                String strWeight = content.substring(content.indexOf(':') + 2, content.indexOf('k'));
+                String strWeight = content.substring(content.indexOf(':') + 2, content.indexOf('.') + 2);
                 intent.putExtra(WeightDBHelper.KEY_WEIGHT, strWeight);
                 startActivityForResult(intent, 0);
                 break;
