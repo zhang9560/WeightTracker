@@ -68,7 +68,7 @@ public class WeightDBHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
-                weights.add(new Weight(cursor.getLong(0), cursor.getInt(1)));
+                weights.add(new Weight(cursor.getLong(0), cursor.getFloat(1)));
             }
             cursor.close();
         }

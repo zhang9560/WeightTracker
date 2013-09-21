@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="match_parent">
-    <com.viewpagerindicator.TitlePageIndicator
-        android:id="@+id/page_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:textColor="@android:color/darker_gray"
-        app:selectedColor="@android:color/holo_red_dark"
-        app:footerColor="@android:color/holo_red_dark" />
-    <android.support.v4.view.ViewPager
-                  android:id="@+id/view_pager"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_below="@id/page_indicator" />
+<com.agimind.widget.SlideHolder xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slide_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="200dip"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark" >
+        <Button
+            android:id="@+id/btn_weight_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/weight_list" />
+        <Button
+            android:id="@+id/btn_line_chart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/line_chart" />
+        <Button
+            android:id="@+id/btn_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</com.agimind.widget.SlideHolder>

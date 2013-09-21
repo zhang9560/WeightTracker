@@ -11,7 +11,7 @@ import cn.limc.androidcharts.view.LineChart;
 
 import java.util.ArrayList;
 
-public class LineChartFragment extends Fragment implements ChartUpdater {
+public class LineChartFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -20,11 +20,6 @@ public class LineChartFragment extends Fragment implements ChartUpdater {
         mLineChart.setDisplayLatitude(true);
         mLineChart.setDisplayLongitude(false);
 
-        return mLineChart;
-    }
-
-    @Override
-    public void updateChart() {
         // Display line chart if number of points more than 1.
         if (WeightListFragment.sWeights.size() > 1) {
             int maxWeight = (int)WeightListFragment.sWeights.get(0).weight + 1;
@@ -62,8 +57,9 @@ public class LineChartFragment extends Fragment implements ChartUpdater {
             mLineChart.setMinValue(minWeight);
             mLineChart.setMaxPointNum(WeightListFragment.sWeights.size());
             mLineChart.setLineData(lines);
-            mLineChart.invalidate();
         }
+
+        return mLineChart;
     }
 
     private LineChart mLineChart;

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="RedActionBarTheme"
+    <style name="MainActivityActionBarTheme"
+           parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/RedActionBar</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_drawer</item>
+    </style>
+
+    <style name="SubActivityActionBarTheme"
            parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/RedActionBar</item>
         <item name="android:homeAsUpIndicator">@drawable/abs__ic_ab_back_holo_dark</item>

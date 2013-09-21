@@ -18,9 +18,9 @@
     <string name="input_height">Input your height</string>
     <string name="must_input_weight">Must input your weight before saving!</string>
     <string name="error">Error</string>
-    <string name="weight_list">WEIGHT LIST</string>
-    <string name="line_chart">LINE CHART</string>
-    <string name="settings">SETTINGS</string>
+    <string name="weight_list">Weight list</string>
+    <string name="line_chart">Line chart</string>
+    <string name="settings">Settings</string>
     <string name="pref_title_target_weight">Target Weight (kilogram)</string>
     <string name="input_target_weight">Input target weight</string>
 </resources>
