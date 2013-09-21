@@ -20,6 +20,8 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        getActivity().setTitle(R.string.weight_list);
+
         mCardsAdapter = new CardAdapter<Card>(getActivity());
         mCardsAdapter.setPopupMenu(R.menu.card_popup, this);
         mDBHelper = new WeightDBHelper(getActivity());

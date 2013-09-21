@@ -23,4 +23,7 @@
     <string name="settings">Settings</string>
     <string name="pref_title_target_weight">Target Weight (kilogram)</string>
     <string name="input_target_weight">Input target weight</string>
+    <string name="trend_chart_of_weight">Trend Chart of Weight</string>
+    <string name="date">Date</string>
+    <string name="weight">Weight</string>
 </resources>

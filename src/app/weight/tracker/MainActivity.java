@@ -12,6 +12,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         mSlideHolder = (SlideHolder)findViewById(R.id.slide_holder);
+        mSlideHolder.setAllowInterceptTouch(false);
         mBtnWeightList = (Button)findViewById(R.id.btn_weight_list);
         mBtnLineChart = (Button)findViewById(R.id.btn_line_chart);
         mBtnSettings = (Button)findViewById(R.id.btn_settings);
@@ -36,7 +37,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public boolean onNavigateUp() {
-        mSlideHolder.toggle();
+        mSlideHolder.toggleImmediately();
         return true;
     }
 
@@ -54,7 +55,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
         fragmentTransaction.commit();
-        mSlideHolder.toggle();
+        mSlideHolder.toggleImmediately();
     }
 
     private SlideHolder mSlideHolder;
