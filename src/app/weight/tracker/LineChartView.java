@@ -93,7 +93,7 @@ public class LineChartView extends BaseChartView {
                 false                                              // generate URLs?
         );
 
-        chart.setBackgroundPaintType(new SolidColor(Color.WHITE));
+        chart.setBackgroundPaintType(new SolidColor(Color.TRANSPARENT));
 
         XYPlot plot = (XYPlot) chart.getPlot();
         // plot.setBackgroundPaintType(new SolidColor(Color.LTGRAY));
