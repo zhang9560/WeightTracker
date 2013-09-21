@@ -19,11 +19,15 @@
     <string name="must_input_weight">身高不能为空!</string>
     <string name="error">错误</string>
     <string name="weight_list">体重列表</string>
-    <string name="line_chart">趋势图</string>
     <string name="settings">设置</string>
     <string name="pref_title_target_weight">目标体重 (公斤)</string>
     <string name="input_target_weight">输入目标体重</string>
     <string name="trend_chart_of_weight">体重趋势图</string>
     <string name="date">日期</string>
     <string name="weight">体重</string>
+    <string name="comparison_chart_of_weight">体重对比图</string>
+    <string name="min_weight">最小体重</string>
+    <string name="max_weight">最大体重</string>
+    <string name="current_weight">当前体重</string>
+    <string name="target_weight">目标体重</string>
 </resources>

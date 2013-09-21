@@ -6,16 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class LineChartFragment extends Fragment {
+public class ColumnChartFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.trend_chart_of_weight);
+        getActivity().setTitle(R.string.comparison_chart_of_weight);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return new LineChartView(getActivity());
+        return new ColumnChartView(getActivity());
     }
 }

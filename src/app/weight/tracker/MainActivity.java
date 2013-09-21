@@ -15,10 +15,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mSlideHolder.setAllowInterceptTouch(false);
         mBtnWeightList = (Button)findViewById(R.id.btn_weight_list);
         mBtnLineChart = (Button)findViewById(R.id.btn_line_chart);
+        mBtnColumnChart = (Button)findViewById(R.id.btn_column_chart);
         mBtnSettings = (Button)findViewById(R.id.btn_settings);
 
         mBtnWeightList.setOnClickListener(this);
         mBtnLineChart.setOnClickListener(this);
+        mBtnColumnChart.setOnClickListener(this);
         mBtnSettings.setOnClickListener(this);
 
         ActionBar actionBar = getActionBar();
@@ -27,6 +29,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         mWeightListFragment = new WeightListFragment();
         mLineChartFragment = new LineChartFragment();
+        mColumnChartFragment = new ColumnChartFragment();
         mSettingsFragment = new SettingsFragment();
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -50,6 +53,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             fragmentTransaction.replace(R.id.fragment_container, mWeightListFragment);
         } else if (view == mBtnLineChart) {
             fragmentTransaction.replace(R.id.fragment_container, mLineChartFragment);
+        } else if (view == mBtnColumnChart) {
+            fragmentTransaction.replace(R.id.fragment_container, mColumnChartFragment);
         } else if (view == mBtnSettings) {
             fragmentTransaction.replace(R.id.fragment_container, mSettingsFragment);
         }
@@ -61,9 +66,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private SlideHolder mSlideHolder;
     private Button mBtnWeightList;
     private Button mBtnLineChart;
+    private Button mBtnColumnChart;
     private Button mBtnSettings;
 
     private Fragment mWeightListFragment;
     private Fragment mLineChartFragment;
+    private Fragment mColumnChartFragment;
     private Fragment mSettingsFragment;
 }

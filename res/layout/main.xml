@@ -18,7 +18,12 @@
             android:id="@+id/btn_line_chart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/line_chart" />
+            android:text="@string/trend_chart_of_weight" />
+        <Button
+                android:id="@+id/btn_column_chart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/comparison_chart_of_weight" />
         <Button
             android:id="@+id/btn_settings"
             android:layout_width="match_parent"
