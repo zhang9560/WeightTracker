@@ -131,7 +131,7 @@ public class LineChartView extends BaseChartView {
 
         for (Weight weight : WeightListFragment.sWeights) {
             calendar.setTimeInMillis(weight.dateInMilliseconds);
-            s1.add(new Day(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH),
+            s1.add(new Day(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1,
                     calendar.get(Calendar.YEAR)), weight.weight);
         }
 

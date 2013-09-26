@@ -39,9 +39,9 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
         for (Weight weight : sWeights) {
             calendar.setTimeInMillis(weight.dateInMilliseconds);
             String date = String.format("%d-%02d-%02d", calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
 
-            Card card = null;
+            Card card;
             if (height != 0) {
                 card = new Card(date, String.format("%s : %.1f%s  %s : %.1f",
                         getString(R.string.weight), weight.weight, getString(R.string.kg), getString(R.string.bmi),
@@ -87,9 +87,9 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
                 GregorianCalendar calendar = new GregorianCalendar();
                 calendar.setTimeInMillis(dateInMilliseconds);
                 String date = String.format("%d-%02d-%02d", calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                        calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
 
-                Card card = null;
+                Card card;
                 if (height != 0) {
                     card = new Card(date, String.format("%s : %.1f%s  %s : %.1f",
                             getString(R.string.weight), weight, getString(R.string.kg), getString(R.string.bmi),
@@ -105,7 +105,7 @@ public class WeightListFragment extends Fragment implements Card.CardMenuListene
                 List<Card> cardsList = mCardsAdapter.getItems();
                 for (Card card : cardsList) {
                     if (dateInMilliseconds == (Long)card.getTag()) {
-                        Card updatedCard = null;
+                        Card updatedCard;
                         if (height != 0) {
                             updatedCard = new Card(card.getTitle(), String.format("%s : %.1f%s  %s : %.1f",
                                     getString(R.string.weight), weight, getString(R.string.kg), getString(R.string.bmi),
